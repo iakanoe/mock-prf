@@ -18,6 +18,7 @@ router.route("/")
     })
     .post((req, res) => {
         db.push(req.body);
+        console.log(req.body, 'AKI')
         res.status(200).json({ success: true, entity: req.body });
     });
 
@@ -30,7 +31,7 @@ router.route("/:id")
         res.status(200).json({ success: true, entity: req.body });
     })
     .delete((req, res) => {
-        db.splice(req.params.id - 1);
+        db.splice(req.params.id - 1, 1);
         res.status(200).json({ success: true });
     });
 
