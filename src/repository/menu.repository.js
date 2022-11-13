@@ -1,6 +1,3 @@
-const express = require("express");
-const router = express.Router();
-
 const menu = [{
         id: 1,
         name: "Pizza Margarita",
@@ -99,8 +96,6 @@ const menu = [{
     },
 ];
 
-router.get("/", (req, res) => {
-    res.status(200).json(menu);
-});
-
-module.exports = router;
+module.exports = {
+    getAll: () => db
+}
