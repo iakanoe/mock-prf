@@ -4,7 +4,7 @@ const repository = require("../repository/notificaciones.repository");
 
 router.route("/")
     .get((req, res) => {
-        let r = repository.getAll();
+        let r = repository.getAllBySocio(req.query.id);
         res.status(200).json(r);
     })
     .post((req, res) => {
@@ -13,16 +13,14 @@ router.route("/")
     });
 
 router.route("/:id")
-    .get((req, res) => {
-        let r = repository.getById(req.params.id);
-        res.status(200).json({ success: true, entity: r });
-    })
-    .put((req, res) => {
-        let r = repository.modify(req.params.id, req.body);
-        res.status(200).json({ success: true, entity: r });
-    })
     .delete((req, res) => {
         repository.deleteById(req.params.id);
+        res.status(200).json({ success: true });
+    });
+
+router.route("/deleteAll")
+    .delete((req, res) => {
+        repository.deleteAll(req.params.id);
         res.status(200).json({ success: true });
     });
 

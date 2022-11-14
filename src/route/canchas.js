@@ -4,7 +4,7 @@ const repository = require("../repository/canchas.repository");
 
 router.route("/")
     .get((req, res) => {
-        let r = repository.getAll();
+        let r = repository.getAllBySocio(req.query.id);
         res.status(200).json(r);
     })
     .post((req, res) => {

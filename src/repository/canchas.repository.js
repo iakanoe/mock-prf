@@ -5,7 +5,7 @@ let db = [
 ];
 
 module.exports = {
-    getAll: () => {
+    getAllBySocio: (idSocio) => {
         return db.map((item, index) => {
             item.id = index + 1;
             return item;

@@ -18,7 +18,6 @@ router.route("/")
     })
     .post((req, res) => {
         db.push(req.body);
-        console.log(req.body, 'AKI')
         res.status(200).json({ success: true, entity: req.body });
     });
 

@@ -1,14 +1,13 @@
 let db = [
-    { message: "Pedido completado!", timestamp: "2022-11-07T18:21:00-03:00" },
-    { message: "Pedido registrado.", timestamp: "2022-11-07T20:00:00-03:00" },
-    { message: "Tus invitados están en la entrada del country.", timestamp: "2022-11-07T18:21:49-03:00" },
+    { id: 1, message: "Pedido completado!", idSocio: 33257 },
+    { id: 2, message: "Pedido registrado.", idSocio: 33257 },
+    { id: 3, message: "Tus invitados están en la entrada del country.", idSocio: 33257 },
 ];
 
 module.exports = {
-    getAll: () => {
-        return db.map((item, index) => {
-            item.id = index + 1;
-            return item;
+    getAllBySocio: (idSocio) => {
+        return db.filter((item) => {
+            return item.idSocio == idSocio.toString();
         });
     },
 
@@ -28,5 +27,9 @@ module.exports = {
     modify: (id, entity) => {
         db[id - 1] = entity;
         return entity;
+    },
+
+    deleteAll: (idSocio) => {
+        
     }
 }
