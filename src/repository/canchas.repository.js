@@ -1,32 +1,40 @@
-let db = [
-    { idSocio: 1, hora: "2022-11-07T18:21:00-03:00", idCancha: 3, llevaEquipo: true },
-    { idSocio: 2, hora: "2022-11-07T18:21:00-03:00", idCancha: 4, llevaEquipo: true },
-    { idSocio: 3, hora: "2022-11-07T18:21:00-03:00", idCancha: 1, llevaEquipo: false },
-];
+const { DataTypes } = require("sequelize");
 
-module.exports = {
-    getAllBySocio: (idSocio) => {
-        return db.map((item, index) => {
-            item.id = index + 1;
-            return item;
-        });
+const db = require("../data/db");
+
+const Model = db.define("Cancha", {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    idSocio: DataTypes.INTEGER,
+    fromTime: DataTypes.DATE,
+    toTime: DataTypes.DATE,
+    llevaEquipo: DataTypes.BOOLEAN,
+    canchaDeFutbol: DataTypes.BOOLEAN,
+    canchaDePadel: DataTypes.BOOLEAN,
+    canchaDeTenis: DataTypes.BOOLEAN
+});
+
+module.exports = Model.sync().then(() => ({
+    getAllBySocio: async (idSocio) => {
+        return await Model.findAll({ where: { idSocio } });
     },
 
-    getById: (id) => {
-        return db[id - 1];
+    getById: async (id) => {
+        return await Model.findAll({ where: { id } });
     },
 
-    deleteById: (id) => {
-        db.splice(id - 1);
+    deleteById: async (id) => {
+        await Model.destroy({ where: { id } });
     },
 
-    add: (entity) => {
-        db.push(entity);
-        return entity;
+    add: async (entity) => {
+        return await Model.create(entity);
     },
 
-    modify: (id, entity) => {
-        db[id - 1] = entity;
-        return entity;
-    }
-}
+    modify: async (id, entity) => {
+        return await Model.update(entity, { where: { id } });
+    },
+}));

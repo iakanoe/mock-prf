@@ -1,35 +1,39 @@
-let db = [
-    { id: 1, message: "Pedido completado!", idSocio: 33257 },
-    { id: 2, message: "Pedido registrado.", idSocio: 33257 },
-    { id: 3, message: "Tus invitados están en la entrada del country.", idSocio: 33257 },
-];
+const { DataTypes } = require("sequelize");
 
-module.exports = {
-    getAllBySocio: (idSocio) => {
-        return db.filter((item) => {
-            return item.idSocio == idSocio.toString();
-        });
+const db = require("../data/db");
+
+const Model = db.define("Notificacion", {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    idSocio: DataTypes.INTEGER,
+    message: DataTypes.STRING
+});
+
+module.exports = Model.sync().then(() => ({
+    getAllBySocio: async (idSocio) => {
+        return await Model.findAll({ where: { idSocio } });
     },
 
-    getById: (id) => {
-        return db[id - 1];
+    getById: async (id) => {
+        return await Model.findAll({ where: { id } });
     },
 
-    deleteById: (id) => {
-        db.splice(id - 1);
+    deleteById: async (id) => {
+        await Model.destroy({ where: { id } });
     },
 
-    add: (entity) => {
-        db.push(entity);
-        return entity;
+    add: async (entity) => {
+        return await Model.create(entity);
     },
 
-    modify: (id, entity) => {
-        db[id - 1] = entity;
-        return entity;
+    modify: async (id, entity) => {
+        return await Model.update(entity, { where: { id } });
     },
 
-    deleteAll: (idSocio) => {
-        
+    deleteAllBySocio: (idSocio) => {
+        return Model.destroy({ where: { idSocio } });
     }
-}
+}));

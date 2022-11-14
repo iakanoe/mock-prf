@@ -4,14 +4,14 @@ var bodyParser = require('body-parser')
 const app = express();
 const port = 8080;
 
-const pedidos = require("./src/route/pedidos");
-const canchas = require("./src/route/canchas");
-const menu = require("./src/route/menu");
-const notificaciones = require("./src/route/notificaciones");
+const pedidos = require("./route/pedidos");
+const canchas = require("./route/canchas");
+const menu = require("./route/menu");
+const notificaciones = require("./route/notificaciones");
 
 app.use(bodyParser.urlencoded({
     extended: true
-  }));
+}));
 app.use(bodyParser.json());
 
 app.listen(port, function() {

@@ -3,26 +3,26 @@ const router = express.Router();
 const repository = require("../repository/canchas.repository");
 
 router.route("/")
-    .get((req, res) => {
-        let r = repository.getAllBySocio(req.query.id);
+    .get(async (req, res) => {
+        let r = await repository.getAllBySocio(req.query.id);
         res.status(200).json(r);
     })
-    .post((req, res) => {
-        let r = repository.add(req.body);
+    .post(async (req, res) => {
+        let r = await repository.add(req.body);
         res.status(200).json({ success: true, entity: r });
     });
 
 router.route("/:id")
-    .get((req, res) => {
-        let r = repository.getById(req.params.id);
+    .get(async (req, res) => {
+        let r = await repository.getById(req.params.id);
         res.status(200).json({ success: true, entity: r });
     })
-    .put((req, res) => {
-        let r = repository.modify(req.params.id, req.body);
+    .put(async (req, res) => {
+        let r = await repository.modify(req.params.id, req.body);
         res.status(200).json({ success: true, entity: r });
     })
-    .delete((req, res) => {
-        repository.deleteById(req.params.id);
+    .delete(async (req, res) => {
+        await repository.deleteById(req.params.id);
         res.status(200).json({ success: true });
     });
 
