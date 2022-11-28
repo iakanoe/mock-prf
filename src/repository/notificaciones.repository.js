@@ -6,17 +6,33 @@ let db = [
 
 module.exports = {
     getAllBySocio: (idSocio) => {
-        return db.filter((item) => {
-            return item.idSocio == idSocio.toString();
+        console.log(db, 'DN')
+        return db.filter((item, index) => {
+            return idSocio === item.idSocio.toString()
         });
     },
 
     getById: (id) => {
-        return db[id - 1];
+        let editItem;
+        db.forEach((item, index) => {
+            if(item.id == id){
+                editItem = item;
+            }
+        })
+        return editItem;
     },
 
     deleteById: (id) => {
-        db.splice(id - 1);
+        let itemIndex;
+        let deletedItem;
+        db.forEach((item, index) => {
+            if(item.id == id){
+                itemIndex = index;
+                deletedItem = item;
+            }
+        })
+        db.splice(itemIndex, 1);
+        return deletedItem;
     },
 
     add: (entity) => {
@@ -25,11 +41,17 @@ module.exports = {
     },
 
     modify: (id, entity) => {
-        db[id - 1] = entity;
-        return entity;
+        db.forEach((item, index) => {
+            if(item.id == id){
+                db[index] = entity;
+            }
+        })
     },
 
     deleteAll: (idSocio) => {
-        
+        console.log(db, idSocio)
+        db = db.filter(item => {
+            return item.idSocio.toString() !== idSocio;
+        })
     }
 }

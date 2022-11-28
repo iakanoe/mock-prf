@@ -1,23 +1,33 @@
-let db = [
-    { idSocio: 1, hora: "2022-11-07T18:21:00-03:00", idCancha: 3, llevaEquipo: true },
-    { idSocio: 2, hora: "2022-11-07T18:21:00-03:00", idCancha: 4, llevaEquipo: true },
-    { idSocio: 3, hora: "2022-11-07T18:21:00-03:00", idCancha: 1, llevaEquipo: false },
-];
+let db = [];
 
 module.exports = {
     getAllBySocio: (idSocio) => {
-        return db.map((item, index) => {
-            item.id = index + 1;
-            return item;
+        return db.filter((item, index) => {
+            return idSocio === item.idSocio.toString()
         });
     },
 
     getById: (id) => {
-        return db[id - 1];
+        let editItem;
+        db.forEach((item, index) => {
+            if(item.id == id){
+                editItem = item;
+            }
+        })
+        return editItem;
     },
 
     deleteById: (id) => {
-        db.splice(id - 1);
+        let itemIndex;
+        let deletedItem;
+        db.forEach((item, index) => {
+            if(item.id == id){
+                itemIndex = index;
+                deletedItem = item;
+            }
+        })
+        db.splice(itemIndex, 1);
+        return deletedItem;
     },
 
     add: (entity) => {
@@ -26,7 +36,10 @@ module.exports = {
     },
 
     modify: (id, entity) => {
-        db[id - 1] = entity;
-        return entity;
+        db.forEach((item, index) => {
+            if(item.id == id){
+                db[index] = entity;
+            }
+        })
     }
 }

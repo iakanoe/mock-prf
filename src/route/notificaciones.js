@@ -18,9 +18,9 @@ router.route("/:id")
         res.status(200).json({ success: true });
     });
 
-router.route("/deleteAll")
+router.route("/delete/all")
     .delete((req, res) => {
-        repository.deleteAll(req.params.id);
+        repository.deleteAll(req.query.id);
         res.status(200).json({ success: true });
     });
 
